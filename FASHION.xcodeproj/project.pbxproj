@@ -37,6 +37,7 @@
 		FF8FFE07250C8C0F007DB5A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF8FFE06250C8C0F007DB5A5 /* LaunchScreen.storyboard */; };
 		FF95D5CA256218B200E49167 /* editProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF95D5C9256218B200E49167 /* editProfilePage.swift */; };
 		FF9B2AA92519149A00474799 /* weatherHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9B2AA82519149A00474799 /* weatherHome.swift */; };
+		FF9BBD7025662B7B00027624 /* addOutfit.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9BBD6F25662B7B00027624 /* addOutfit.swift */; };
 		FFABE9AA2528414D00BD7A55 /* makePosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFABE9A92528414D00BD7A55 /* makePosts.swift */; };
 		FFCE072324E798DA00B810C2 /* PrivateData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FFCE072124E798DA00B810C2 /* PrivateData.xcdatamodeld */; };
 		FFE0D1E024E656BC0088749F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE0D1DF24E656BC0088749F /* CustomTableViewCell.swift */; };
@@ -107,6 +108,7 @@
 		FF8FFE06250C8C0F007DB5A5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF95D5C9256218B200E49167 /* editProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editProfilePage.swift; sourceTree = "<group>"; };
 		FF9B2AA82519149A00474799 /* weatherHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = weatherHome.swift; sourceTree = "<group>"; };
+		FF9BBD6F25662B7B00027624 /* addOutfit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addOutfit.swift; sourceTree = "<group>"; };
 		FFABE9A92528414D00BD7A55 /* makePosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = makePosts.swift; sourceTree = "<group>"; };
 		FFCE072224E798DA00B810C2 /* PrivateData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PrivateData.xcdatamodel; sourceTree = "<group>"; };
 		FFE0D1DF24E656BC0088749F /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -193,9 +195,9 @@
 		FF29AF6524CB2E47001E2E90 /* FASHION */ = {
 			isa = PBXGroup;
 			children = (
-				FF509D7F250B372600DC370B /* Utilities */,
 				FF29AF6624CB2E47001E2E90 /* AppDelegate.swift */,
 				FF29AF6824CB2E47001E2E90 /* SceneDelegate.swift */,
+				FF509D7F250B372600DC370B /* Utilities */,
 				FF509D7E250B36E300DC370B /* FASHIONPages */,
 				FF5A8CDF2537608900BE9BC3 /* Main.storyboard */,
 				FF8FFE06250C8C0F007DB5A5 /* LaunchScreen.storyboard */,
@@ -245,6 +247,7 @@
 				FF29AF6A24CB2E47001E2E90 /* ViewController.swift */,
 				FF1454E525258715005E9504 /* outfitsPage.swift */,
 				FF95D5C9256218B200E49167 /* editProfilePage.swift */,
+				FF9BBD6F25662B7B00027624 /* addOutfit.swift */,
 			);
 			path = FASHIONPages;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				FF29AF6724CB2E47001E2E90 /* AppDelegate.swift in Sources */,
 				FF53545125325D1B00B9725A /* profileCollectionViewCell.swift in Sources */,
 				FFE0F4292526DDF300AFE9A1 /* SocialMediaCell.swift in Sources */,
+				FF9BBD7025662B7B00027624 /* addOutfit.swift in Sources */,
 				FF95D5CA256218B200E49167 /* editProfilePage.swift in Sources */,
 				FF57D5A024E4F04700E5700E /* addShoes.swift in Sources */,
 				FF402C42253BE4DC00523945 /* viewOutfits.swift in Sources */,
