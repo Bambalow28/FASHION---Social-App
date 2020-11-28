@@ -47,7 +47,6 @@ class mainHome: UIViewController,UITableViewDataSource, UITableViewDelegate {
         
         fetchUsers()
         
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         tableView.addSubview(refreshControl) // not required when using UITableViewController
     }
@@ -139,6 +138,9 @@ class mainHome: UIViewController,UITableViewDataSource, UITableViewDelegate {
     @IBAction func addPostClicked(_ sender: Any) {
         transitionToPost()
     }
+    @IBAction func marketplaceClicked(_ sender: Any) {
+        transitionToMarketplace()
+    }
     
     func fetchUsers(){
         //Retrieve Data from DB
@@ -221,5 +223,17 @@ class mainHome: UIViewController,UITableViewDataSource, UITableViewDelegate {
         newViewController.modalPresentationStyle = .overCurrentContext
         newViewController.modalTransitionStyle = .crossDissolve
         self.present(newViewController, animated: true, completion: nil)
+    }
+    
+    func transitionToMarketplace() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let marketplaceController = storyBoard.instantiateViewController(withIdentifier: "marketplacePage") as! marketplacePage
+
+        let navController = UINavigationController(rootViewController: marketplaceController)
+        
+        navController.modalPresentationStyle = .fullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        
+        self.present(navController, animated: true, completion: nil)
     }
 }

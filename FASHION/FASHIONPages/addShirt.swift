@@ -11,6 +11,7 @@ import CoreData
 import FirebaseDatabase
 import FirebaseStorage
 import Firebase
+import DropDown
 
 class addShirt: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -19,10 +20,12 @@ class addShirt: UIViewController, UINavigationControllerDelegate, UIImagePickerC
     @IBOutlet weak var sizeItem: UITextField!
     @IBOutlet weak var itemLocation: UITextField!
     @IBOutlet weak var photoTaken: UIImageView!
+    @IBOutlet weak var categoryBtn: UIButton!
     @IBOutlet weak var addBtn: customButton!
     
     var urlString = ""
     let userID = Auth.auth().currentUser?.uid
+    let categoryDropdown = DropDown()
     
     var ref: DatabaseReference!
     private let storage = Storage.storage().reference()
@@ -38,6 +41,9 @@ class addShirt: UIViewController, UINavigationControllerDelegate, UIImagePickerC
         ref = Database.database().reference()
         
         title = "Add Item"
+        
+        categoryDropdown.dismissMode = .automatic
+        DropDown.appearance().cornerRadius = 10
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DismissKeyboard))
         
@@ -99,6 +105,17 @@ class addShirt: UIViewController, UINavigationControllerDelegate, UIImagePickerC
         photoTaken.image = image
 }
     
+    @IBAction func categorySelect(_ sender: UIButton) {
+        categoryDropdown.dataSource = ["Top", "Bottoms", "Shoes", "Accessories"]//4
+        categoryDropdown.anchorView = sender as AnchorView //5
+        categoryDropdown.bottomOffset = CGPoint(x: 0, y: (sender as AnyObject).frame.size.height) //6
+        categoryDropdown.show() //7
+        categoryDropdown.selectionAction = { [weak self] (index: Int, item: String) in //8
+              guard let _ = self else { return }
+                (sender as AnyObject).setTitle(item, for: .normal) //9
+            }
+    }
+    
     @IBAction func addClicked(_ sender: Any)
     {
         if lblTopName.text == ""
@@ -151,24 +168,21 @@ class addShirt: UIViewController, UINavigationControllerDelegate, UIImagePickerC
         }
         else
         {
-            let userID = Auth.auth().currentUser?.uid
-
-            DispatchQueue.main.async
-            {
-                //Firebase Saving
-                self.ref?.child("users").child(userID!).child("Items").child(self.lblTopName.text!).setValue([
-                    "brandName": self.brandName.text!,
-                    "itemSize": self.sizeItem.text!,
-                    "itemLocation": self.itemLocation.text!,
-                    "imageURL": self.urlString
-                ])
-            }
+            let categorySelected = categoryBtn.currentTitle!
             
+            //Firebase Saving
+            self.ref?.child("users").child(self.userID!).child("Items").child(self.lblTopName.text!).setValue([
+                "brandName": self.brandName.text!,
+                "itemSize": self.sizeItem.text!,
+                "itemLocation": self.itemLocation.text!,
+                "imageURL": self.urlString,
+                "category": categorySelected
+            ])
             self.addBtn.layer.backgroundColor = UIColor.systemGreen.cgColor
             self.addBtn.setTitle("Saved!", for: .normal)
             
-            let secTwo = 1.5
-            DispatchQueue.main.asyncAfter(deadline: .now() + secTwo)
+            let sec = 1.0
+            DispatchQueue.main.asyncAfter(deadline: .now() + sec)
             {
                 self.transitionToCloset()
             }

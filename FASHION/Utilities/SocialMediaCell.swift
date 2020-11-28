@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class SocialMediaCell: UITableViewCell {
 
@@ -23,19 +24,6 @@ class SocialMediaCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        if (likeStatus > 0) {
-            likePost.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        }
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-            tap.numberOfTapsRequired = 2
-            postImage.addGestureRecognizer(tap)
-
-    }
-    
-    @objc func doubleTapped() {
-        likePost.setImage(UIImage(systemName: "heart.fill"), for: .normal)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -46,11 +34,10 @@ class SocialMediaCell: UITableViewCell {
     @IBAction func likeBtnClicked(_ sender: Any) {
 
         if(likeStatus == 0) {
-            likeStatus = 1
+            likeStatus += 1
             likePost.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         }
         else {
-            likeStatus = 0
             likePost.setImage(UIImage(systemName: "heart"), for: .normal)
         }
     }

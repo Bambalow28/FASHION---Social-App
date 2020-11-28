@@ -14,6 +14,7 @@ target 'FASHION' do
   pod 'Alamofire', '~> 5.2'
   pod 'SwiftyJSON', '~> 4.0'
   pod 'Firebase/Auth'
+  pod 'DropDown'
 
   target 'FASHIONTests' do
     inherit! :search_paths

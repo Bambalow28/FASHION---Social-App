@@ -8,15 +8,16 @@
 
 import Foundation
 import UIKit
-import FirebaseDatabase
-import FirebaseStorage
+import CoreData
+import Firebase
 
 class outfitsPage: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
     @IBOutlet weak var tableView: UITableView!
     
     var ref: DatabaseReference!
-    var outfits = ["Date Night"]
+    var outfits: [String] = []
+    let userID = Auth.auth().currentUser?.uid
     
     //Makes status bar light
     override var preferredStatusBarStyle: UIStatusBarStyle
@@ -30,11 +31,18 @@ class outfitsPage: UIViewController, UITableViewDelegate, UITableViewDataSource 
         title = "Outfits"
 
         ref = Database.database().reference()
+        
         tableView.delegate = self
         tableView.dataSource = self
         
         self.tableView.separatorStyle = .none
         
+        viewOutfits()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -63,11 +71,36 @@ class outfitsPage: UIViewController, UITableViewDelegate, UITableViewDataSource 
         
         cell.itemImage.layer.cornerRadius =  cell.itemImage.frame.height/2
         
-        cell.itemName.text = "Date Night"
+        
+        cell.itemName?.text = outfits[indexPath.row]
         
         return cell
         
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
+        if(editingStyle == .delete){
+            
+            let outfitID = outfits[indexPath.row]
+            
+            ref.child("users").child(userID!).child("Outfits").child(outfitID).removeValue()
+            self.outfits.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+//            let desertRef = storage.child("images").child(itemsID)
+//
+//            // Delete the file
+//            desertRef.delete { error in
+//                if error != nil {
+//                    print("Oops! Something Went Wrong!")
+//                } else {
+//                    print("Success! Photo Deleted!")
+//                }
+            }
+            
+            self.tableView.reloadData()
+            
+        }
     
     @IBAction func homeBtnClicked(_ sender: Any) {
         transitionToHome()
@@ -167,7 +200,56 @@ class outfitsPage: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
     
     func viewOutfits() {
-        
+        //Retrieve Data from DB
+        ref?.child("users").child(userID!).child("Outfits").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            for child in snapshot.children.allObjects as! [DataSnapshot]
+            {
+                self.outfits.append(child.key)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+
+            }
+        })
     }
 
+}
+
+extension outfitsPage: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch (type) {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .fade)
+            }
+            break;
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            break;
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            
+            if let newIndexPath = newIndexPath {
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            }
+            break;
+        @unknown default:
+            print("Oops!")
+        }
+    }
 }

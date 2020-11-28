@@ -197,10 +197,13 @@ class makePosts: UIViewController, UIImagePickerControllerDelegate & UINavigatio
     func transitionToHome() {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let newViewController = storyBoard.instantiateViewController(withIdentifier: "mainHome") as! mainHome
+
+        let navController = UINavigationController(rootViewController: newViewController)
         
-        newViewController.modalPresentationStyle = .fullScreen
-        newViewController.modalTransitionStyle = .crossDissolve
-        self.present(newViewController, animated: true, completion: nil)
+        navController.modalPresentationStyle = .fullScreen
+        navController.modalTransitionStyle = .crossDissolve
+        
+        self.present(navController, animated: true, completion: nil)
     }
     
     func pulsate() {

@@ -127,7 +127,7 @@ class myCloset: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
         self.tableView.reloadData()
     }
